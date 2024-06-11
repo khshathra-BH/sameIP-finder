@@ -20,7 +20,7 @@ pip3 install dnspython
 2. Place your subdomains list in a text file (e.g., subdomains.txt). Each line should contain a single subdomain.
 3. Run the script with the subdomain file path:
 ```bash
-python sameip.py path/to/your/subdomains.txt
+python sameIP-finder.py path/to/your/subdomains.txt
 ```
 4. Optional arguments:
 
