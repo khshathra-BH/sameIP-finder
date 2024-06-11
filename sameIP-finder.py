@@ -4,19 +4,6 @@ import re
 import argparse
 
 def find_subdomains_with_same_ip(subdomains_file, output_format="text", verbose=False):
-  """
-  Analyzes a file containing subdomains and uses the dnspython library
-  to identify subdomains that resolve to the same IP address.
-
-  Args:
-      subdomains_file (str): Path to the text file containing subdomains (one per line).
-      output_format (str, optional): Output format (JSON or text). Defaults to "text".
-      verbose (bool, optional): Controls the verbosity of error messages. Defaults to False.
-
-  Returns:
-      dict or str: A dictionary with results (if output_format is "text")
-          or a JSON string with the results (if output_format is "json").
-  """
 
   results = {}
   resolver = dns.resolver.Resolver()
