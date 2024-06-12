@@ -2,6 +2,7 @@ import json
 import dns.resolver
 import re
 import argparse
+from urllib.parse import urlparse
 
 def find_subdomains_with_same_ip(subdomains_file, output_format="text", verbose=False):
 
@@ -11,6 +12,9 @@ def find_subdomains_with_same_ip(subdomains_file, output_format="text", verbose=
   with open(subdomains_file, "r") as f:
     for subdomain in f:
       subdomain = subdomain.strip()  # Remove leading/trailing whitespace
+
+      if subdomain.startswith("http://") or subdomain.startswith("https://"):
+        subdomain = urlparse(subdomain).hostname
 
       try:
         # Use dnspython to resolve A record (using updated method)
