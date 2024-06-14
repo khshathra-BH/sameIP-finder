@@ -1,4 +1,5 @@
-##  Resolve to the same IP address
+##  Resolved Mapper
+
 This Python tool helps you analyze a file containing subdomains and identify those that resolve to the same IP address. It utilizes the dnspython library for DNS lookups.
 
 ### Features:
