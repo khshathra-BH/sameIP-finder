@@ -1,0 +1,10 @@
+dns.resolver
+dns.exception
+re
+json
+time
+argparse
+sys
+tabulate
+colorama
+urllib.parse
