@@ -2,7 +2,6 @@ dns.resolver
 dns.exception
 re
 json
-time
 argparse
 tabulate
 colorama
