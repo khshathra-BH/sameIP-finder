@@ -3,50 +3,42 @@ This Python tool helps you analyze a file containing subdomains and identify tho
 
 ### Features:
 
-- Analyzes subdomains from a text file (one per line).
-- Uses DNS lookups to determine IP addresses.
-- Groups subdomains that resolve to the same IP address.
-- Provides results in either text or JSON format (user-selectable).
-- Suppresses errors by default (optional verbose mode for error messages).
+* Outputs results in JSON format (default) or text format.
+* Add option for summery report
+* Get subdomains in pipe (cat subdomains | python3 resolved_mapper.py )
   
 ### Installation:
 1. Ensure you have Python 3 installed.
-2. Install the required library:
-```bash
-pip3 install dnspython
-```
+
 ### Usage:
 1. git clone the project.
-2. Place your subdomains list in a text file (e.g., subdomains.txt). Each line should contain a single subdomain.
-3. Run the script with the subdomain file path:
+2. `cd resolved_mapper`
+3. `pip3 install -r requirements.txt`
+4. Run the script with the subdomain file path:
 ```bash
-python3 sameIP-finder.py path/to/your/subdomains.txt
+python3 resolved_mapper.py -f subdomains.txt
 ```
-4. Optional arguments:
 
-`-f`, `--format`: Specify output format (text or JSON). Defaults to "text".
-`-v`, `--verbose`: Enable error messages (default: suppressed).
+## Optional arguments:
+
+```bash
+options:
+  -h, --help            show this help message and exit
+  -f FILE, --file FILE  Path to the text file containing subdomains (one per line)
+  -o {json,text}, --output {json,text}
+                        Output format (JSON or text (default))
+  -r, --report          Show a summery report
+  -v, --verbose         Enable error messages (default: suppressed)
+```
 
 #### Example Output (Text Format):
-```bash
-10.0.0.1
----------------
-subdomain1.example.com
-subdomain2.example.com
 
-192.168.1.1
----------------
-subdomain3.example.com
-```
-#### Example Output (JSON Format with -f json):
-```bash
-{
-  "10.0.0.1": [
-    "subdomain1.example.com",
-    "subdomain2.example.com"
-  ],
-  "192.168.1.1": [
-    "subdomain3.example.com"
-  ]
-}
-```
+![resolved_mapper-text](https://github.com/miladkeivanfar/resolved_mapper/assets/129506375/67c14441-cd45-46ab-8d22-22ede7f8a9a9)
+
+
+
+#### Example Output (JSON Forma):
+
+![resolved_mapper-json](https://github.com/miladkeivanfar/resolved_mapper/assets/129506375/79ff5bcf-ce38-447b-b9c4-0388bed02456)
+
+
