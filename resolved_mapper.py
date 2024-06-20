@@ -88,36 +88,39 @@ def main():
                     print("except dns.resolver.Timeout")
                     pass  # Silently handle timeouts by default
                 except Exception as e:
-                    if verbose:  # Only print errors if verbose is explicitly set to True
+                    if args.verbose:  # Only print errors if verbose is explicitly set to True
                         print(f"Error: Unknown error for '{subdomain}': {e}. Skipping.")
         else:
-            with open(args.file, "r") as f:
-                lines = f.readlines()
-                all_subs = len(lines) # find number of subs in input file
+            if args.file:
+                with open(args.file, "r") as f:
+                    lines = f.readlines()
+                    all_subs = len(lines) # find number of subs in input file
 
-                for subdomain in lines:
-                    subdomain = subdomain.strip()  # Remove leading/trailing whitespace
+                    for subdomain in lines:
+                        subdomain = subdomain.strip()  # Remove leading/trailing whitespace
 
-                    if subdomain.startswith("http://") or subdomain.startswith("https://"):
-                        subdomain = urlparse(subdomain).hostname
+                        if subdomain.startswith("http://") or subdomain.startswith("https://"):
+                            subdomain = urlparse(subdomain).hostname
 
-                    try:
-                        # Use dnspython to resolve A record (using updated method)
-                        answers = resolver.resolve(subdomain, "A")
-                        ip_address = answers[0].to_text()  # Get the first A record IP
-                        if ip_address not in results:
-                          results[ip_address] = []
-                        results[ip_address].append(subdomain)
+                        try:
+                            # Use dnspython to resolve A record (using updated method)
+                            answers = resolver.resolve(subdomain, "A")
+                            ip_address = answers[0].to_text()  # Get the first A record IP
+                            if ip_address not in results:
+                              results[ip_address] = []
+                            results[ip_address].append(subdomain)
 
-                    except dns.resolver.NXDOMAIN:
-                        print("except dns.resolver.NXDOMAIN")
-                        pass  # Silently handle non-existent domains by default
-                    except dns.resolver.Timeout:
-                        print("except dns.resolver.Timeout")
-                        pass  # Silently handle timeouts by default
-                    except Exception as e:
-                        if verbose:  # Only print errors if verbose is explicitly set to True
-                            print(f"Error: Unknown error for '{subdomain}': {e}. Skipping.")
+                        except dns.resolver.NXDOMAIN:
+                            print("except dns.resolver.NXDOMAIN")
+                            pass  # Silently handle non-existent domains by default
+                        except dns.resolver.Timeout:
+                            print("except dns.resolver.Timeout")
+                            pass  # Silently handle timeouts by default
+                        except Exception as e:
+                            if args.verbose:  # Only print errors if verbose is explicitly set to True
+                                print(f"Error: Unknown error for '{subdomain}': {e}. Skipping.")
+            else:
+                print(Fore.RED + "Error: No input file provided.\n" + Style.RESET_ALL)
 
     except ValueError:
         print(f"Invalid URL: {subdomain}")
@@ -127,8 +130,6 @@ def main():
 
     if final_output:
         print(final_output)
-    else:
-        print("There is'nt any output.")
 
     end = time.time()
     duration = end - start
